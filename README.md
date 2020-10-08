@@ -22,3 +22,10 @@ students looking to transfer from their current university.
 - Coming from a conservative East Indian family, academic performance and world rankings were always a bigger priority 
 for my parents when compared to extracurricular interests. I want to build this platform so that students can find a 
 highly ranked university that also satisfies their extracurricular interests.
+
+**User Stories**
+- As a user, I want to be able to add my interests, major choice and location for finding a university 
+and add to my choices.
+- As a user, I want to be able to view the all universities in the database
+- As a user, I want to be able to get the website / full information page link of the recommended universities
+- As a user, I want to be able to view the top 5 universities recommended for me based on my choices.
