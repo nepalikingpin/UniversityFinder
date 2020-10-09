@@ -25,6 +25,10 @@ public class UserChoicesList<E> {
         size++;
     }
 
+    public void add(E e) {
+        add(size, e);
+    }
+
     public E remove(int index) {
         checkIndex(index);
 
