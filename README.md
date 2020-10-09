@@ -1,6 +1,6 @@
 # University Finder
 
-## *Find the perfect univeristy for you based on your interests, major choice, and location!*
+## *Find the perfect university for you based on your interests, major choice, and location!*
 
 The applications intends to help high school and university students find the perfect university for them.
 
