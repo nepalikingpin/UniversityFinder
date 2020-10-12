@@ -2,13 +2,13 @@ package model;
 
 import java.util.*;
 
-public class UserChoicesList<E> {
+public class ChoicesList<E> {
     private int size = 0;
     private static final int INITIAL_CAPACITY = 5;
     private E[] data = (E[]) new Object[INITIAL_CAPACITY];
 
     public int size() {
-        return size();
+        return size;
     }
 
     public boolean isEmpty() {
