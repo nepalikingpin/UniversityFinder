@@ -4,7 +4,7 @@ import model.*;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.*;
+
 
 public class Console {
     String interests = "";
@@ -92,7 +92,9 @@ public class Console {
 
         }
 
-        suggest.suggestion();
+        System.out.println("Check these universities out");
+        System.out.println(suggest.suggestion());
+
 
     }
 }

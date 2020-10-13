@@ -1,5 +1,7 @@
 package model;
 
+import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
+
 import java.util.ArrayList;
 
 
@@ -16,7 +18,8 @@ public class SuggestUniversity {
 
     //EFFECTS: compares interests, major and location of userList object with every object in dataList; and prints
     // out the related university if the match is found
-    public void suggestion() {
+    public String suggestion() {
+        String universities = "";
         for (int i = 0; i < userList.size(); i++) {
             UserChoices userTemp = (UserChoices) userList.get(i);
 
@@ -26,9 +29,15 @@ public class SuggestUniversity {
                 if (userTemp.getInterests().equals(dataTemp.getInterests())
                         || userTemp.getMajor().equals(dataTemp.getMajor())
                         || userTemp.getLocation().equals(dataTemp.getLocation())) {
-                    System.out.println(dataTemp.getUniversity());
+                    universities += dataTemp.getUniversity() + "\n";
                 }
             }
         }
+        if (!universities.isEmpty()) {
+            return universities;
+        } else {
+            return "Sorry, cannot find any universities";
+        }
     }
 }
+

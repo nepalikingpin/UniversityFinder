@@ -14,6 +14,5 @@ public class AddToData {
                 "University of Toronto"));
         list.add(new DataChoices("robotics", "math", "usa",
                 "UC Berkley"));
-
     }
 }
