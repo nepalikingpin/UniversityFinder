@@ -1,11 +1,11 @@
 package model;
 
-import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
-
 import java.util.ArrayList;
 
 import static java.lang.Integer.min;
 
+//Class to suggest the university to user, if the interests or major or location of the UserChoices object in userlist
+// are the same as DataChoices object in the dataList
 
 public class SuggestUniversity {
     private ChoicesList<Object> userList;

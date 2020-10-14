@@ -1,7 +1,7 @@
 package model;
 
-import java.util.ArrayList;
-
+// Extends the choices class and declares the UserChoices object, which is where the user interests, major and
+// location stored
 public class UserChoices extends Choices {
 
     //MODIFIES: this

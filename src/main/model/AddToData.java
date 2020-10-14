@@ -2,6 +2,8 @@ package model;
 
 import java.util.List;
 
+//Creates the database by creating and adding DataChoices objects to the list.
+
 public class AddToData {
 
     //MODIFIES: list

@@ -1,5 +1,8 @@
 package model;
 
+//Abstract class Choices, extended by User and Data Choices classes. The choices object has protected elements
+// interests, major and location. Also has the getter methods for these variables.
+
 public abstract class Choices {
     protected String interests;
     protected String major;

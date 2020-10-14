@@ -1,5 +1,7 @@
 package model;
-// what does the class do
+
+// Custom data structure that is used to store the UserChoices objects. Has methods : size, isEmpty, add on index, add
+// at the end, remove, removeAll, get at index, contains element and helper methods of ensureCapacity and checkIndex
 
 public class ChoicesList<E> {
     private int size = 0;

@@ -1,5 +1,7 @@
 package model;
 
+// Extends Choices and declared a DataChoices object, it's object is used to store information in the database list.
+
 public class DataChoices extends Choices {
     private String university;
 
