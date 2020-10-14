@@ -19,9 +19,11 @@ public class AddToDataTest {
         DataChoices temp = (DataChoices) list.get(0);
 
         assertEquals("esports", temp.getInterests());
-        assertEquals("cs", temp.getMajor());
+        assertEquals("psychology", temp.getMajor());
         assertEquals("canada", temp.getLocation());
-        assertEquals("University of British Columbia", temp.getUniversity());
+        assertEquals("University of British Columbia https://www.ubc.ca/" + "\n"
+                + "Location: Vancouver, Canada" + "\n"
+                + "World Ranking: 45 (2021)", temp.getUniversity());
 
 
     }
