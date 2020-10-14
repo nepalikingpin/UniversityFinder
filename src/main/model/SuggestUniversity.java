@@ -33,7 +33,7 @@ public class SuggestUniversity {
                         || userTemp.getMajor().equals(dataTemp.getMajor())
                         || userTemp.getLocation().equals(dataTemp.getLocation())) {
 
-                    if (!universities.contains(dataTemp.getUniversity())) {
+                    if (!(suggestionList.contains(dataTemp.getUniversity()))) {
                         suggestionList.add(((DataChoices) data).getUniversity());
                     }
                 }

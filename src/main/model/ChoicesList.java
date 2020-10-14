@@ -37,11 +37,11 @@ public class ChoicesList<E> {
         add(size, e);
     }
 
-    //REQUIRES: size>0
+    //REQUIRES: index > 0 and index < size
     //MODIFIES: this
     //EFFECTS: removes the element at index, and returns the list
     public E remove(int index) {
-        checkIndex(index);
+
         E temp = data[index];
         for (int i = index; i < size - 1; i++) {
             data[i] = data[i + 1];
@@ -59,9 +59,9 @@ public class ChoicesList<E> {
         size = 0;
     }
 
+    //REQUIRES: index > 0 and index < size
     //EFFECTS: returns the element at index
     public E get(int index) {
-        checkIndex(index);
 
         return data[index];
     }
@@ -88,14 +88,6 @@ public class ChoicesList<E> {
             System.arraycopy(data, 0, newData, 0, data.length);
 
             data = newData;
-        }
-    }
-
-    //EFFECTS: checks if index is less than 0, or if index is less than or equal to size;
-    // prints IndexOutOfBounds if either is true
-    private void checkIndex(int index) {
-        if (index < 0 || index >= size) {
-            System.out.println("Index Out Of Bounds");
         }
     }
 

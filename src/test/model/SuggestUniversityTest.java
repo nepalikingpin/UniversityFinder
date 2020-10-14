@@ -122,6 +122,7 @@ public class SuggestUniversityTest {
         dataList.add((new DataChoices("gaming","math","usa","UC Berkley")));
         dataList.add((new DataChoices("gaming","math","usa","UCSD")));
         dataList.add((new DataChoices("gaming","math","usa","NYU")));
+        dataList.add((new DataChoices("robotics","math","usa","NYU")));
         dataList.add((new DataChoices("gaming","math","usa","Stanford")));
         dataList.add((new DataChoices("gaming","math","usa","UofC")));
         dataList.add((new DataChoices("gaming","Information Technology","india",

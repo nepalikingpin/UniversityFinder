@@ -41,7 +41,6 @@ public class ChoicesListTest {
         }
         choicesList.remove(2);
         assertEquals(9, choicesList.size());
-        assertEquals(null, choicesList.remove(12));
     }
 
     @Test
@@ -62,6 +61,14 @@ public class ChoicesListTest {
         ChoicesList<Integer> choicesList = new ChoicesList<>();
 
         assertTrue(choicesList.isEmpty());
+    }
+
+    @Test
+    public void NotEmptyTest() {
+        ChoicesList<Integer> choicesList = new ChoicesList<>();
+        choicesList.add(1);
+
+        assertFalse(choicesList.isEmpty());
     }
 
     @Test
