@@ -113,5 +113,25 @@ public class SuggestUniversityTest {
 
     }
 
+    @Test
+    public void SuggestMoreThanFiveUniversitiesTest() {
+        ChoicesList<Object> userList = new ChoicesList<>();
+        ArrayList<Object> dataList = new ArrayList<>();
+
+        userList.add(new UserChoices("gaming","math","canada"));
+        dataList.add((new DataChoices("gaming","math","usa","UC Berkley")));
+        dataList.add((new DataChoices("gaming","math","usa","UCSD")));
+        dataList.add((new DataChoices("gaming","math","usa","NYU")));
+        dataList.add((new DataChoices("gaming","math","usa","Stanford")));
+        dataList.add((new DataChoices("gaming","math","usa","UofC")));
+        dataList.add((new DataChoices("gaming","Information Technology","india",
+                "IIT Bombay")));
+
+        SuggestUniversity suggestion = new SuggestUniversity(userList, dataList);
+
+        assertEquals("UC Berkley" + "\n"+ "UCSD" +"\n" + "NYU" + "\n"+ "Stanford" +"\n" + "UofC" +"\n"
+                ,suggestion.suggestion());
+    }
+
 
 }

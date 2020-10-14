@@ -4,6 +4,8 @@ import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
 
 import java.util.ArrayList;
 
+import static java.lang.Integer.min;
+
 
 public class SuggestUniversity {
     private ChoicesList<Object> userList;
@@ -19,6 +21,7 @@ public class SuggestUniversity {
     //EFFECTS: compares interests, major and location of userList object with every object in dataList; and prints
     // out the related university if the match is found
     public String suggestion() {
+        ArrayList<String> suggestionList = new ArrayList<>();
         String universities = "";
         for (int i = 0; i < userList.size(); i++) {
             UserChoices userTemp = (UserChoices) userList.get(i);
@@ -29,11 +32,17 @@ public class SuggestUniversity {
                 if (userTemp.getInterests().equals(dataTemp.getInterests())
                         || userTemp.getMajor().equals(dataTemp.getMajor())
                         || userTemp.getLocation().equals(dataTemp.getLocation())) {
-                    universities += dataTemp.getUniversity() + "\n";
+
+                    if (!universities.contains(dataTemp.getUniversity())) {
+                        suggestionList.add(((DataChoices) data).getUniversity());
+                    }
                 }
             }
         }
-        if (!universities.isEmpty()) {
+        if (!suggestionList.isEmpty()) {
+            for (int i = 0; i < min(suggestionList.size(), 5); i++) {
+                universities += suggestionList.get(i) + "\n";
+            }
             return universities;
         } else {
             return "Sorry, cannot find any universities";
