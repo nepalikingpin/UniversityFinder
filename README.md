@@ -29,3 +29,5 @@ and add to my choices.
 - As a user, I want to be able to view the all universities in the database
 - As a user, I want to be able to get the website / full information page link of the recommended universities
 - As a user, I want to be able to view the top 5 universities recommended for me based on my choices.
+- As a user, I want to be able to save the universities recommended for me, to a file.
+- As a user, I want to be able to load the recommended universities from the file.
