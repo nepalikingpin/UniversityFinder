@@ -14,7 +14,7 @@ import static java.lang.Integer.min;
 public class SuggestUniversity implements Writable {
     private ChoicesList<Object> userList;
     private ArrayList<Object> dataList;
-    private ArrayList<String> suggestionList;
+    private ArrayList<String> suggestionList = new ArrayList<>();
     private String universities;
     //MODIFIES: this
     //EFFECTS: creates a SuggestUniversity object and assigns userList and dataList
@@ -22,7 +22,6 @@ public class SuggestUniversity implements Writable {
     public SuggestUniversity(ChoicesList<Object> userList, ArrayList<Object> dataList) {
         this.userList = userList;
         this.dataList = dataList;
-        suggestionList = new ArrayList<>();
     }
 
     public SuggestUniversity() { //Testing
@@ -56,11 +55,12 @@ public class SuggestUniversity implements Writable {
         }
         if (!suggestionList.isEmpty()) {
             for (int i = 0; i < min(suggestionList.size(), 5); i++) {
+
                 universities += suggestionList.get(i) + "\n";
             }
             return universities;
         } else {
-            return "Sorry, cannot find any universities";
+            throw new NullPointerException();
         }
     }
 
@@ -72,38 +72,30 @@ public class SuggestUniversity implements Writable {
         return this.suggestionList;
     }
 
-    public void loadSuggestions(ArrayList<String> suggestionList) {
-        for (int i = 0; i < suggestionList.size(); i++) {
-            this.suggestionList.add(suggestionList.get(i));
-        }
-    }
+//    public void loadSuggestions(ArrayList<String> suggestionList) {
+//        for (int i = 0; i < suggestionList.size(); i++) {
+//            this.suggestionList.add(suggestionList.get(i));
+//        }
+//    }
 
     public int listSize() {
         return suggestionList.size();
     }
 
     @Override
-    public JSONObject toJson() {
+    public JSONObject toJson() throws NullPointerException {
         JSONObject json = new JSONObject();
         json.put("Suggested", suggestedToJson());
         return json;
     }
 
     // EFFECTS: returns things in this workroom as a JSON array
-    private JSONArray suggestedToJson() {
+    private JSONArray suggestedToJson() throws NullPointerException {
         JSONArray jsonArray = new JSONArray();
-
-        try {
-            for (int i = 0; i < suggestionList.size(); i++) {
-                jsonArray.put(suggestionList.get(i));
-            }
-        } catch (NullPointerException e) {
-            System.out.println("No Universities in the Database");
+        for (int i = 0; i < suggestionList.size(); i++) {
+            jsonArray.put(suggestionList.get(i));
         }
-
         return jsonArray;
     }
-
-
 }
 
