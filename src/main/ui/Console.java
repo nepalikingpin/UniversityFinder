@@ -1,42 +1,52 @@
 package ui;
 
 import model.*;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-
 public class Console {
+    int start;
     String interests = "";
     String major = "";
     String location = "";
     UserChoices uc = new UserChoices("", "", "");
     ChoicesList<Object> userList = new ChoicesList<Object>();
     ArrayList<Object> dataList = new ArrayList<>();
-
     DataChoices dc = new DataChoices("","","","");
     AddToData atd = new AddToData(dc, dataList);
     SuggestUniversity suggest = new SuggestUniversity(userList, dataList);
 
     Scanner in = new Scanner(System.in);
+    private static final String JSON_STORE = "./data/universitySuggestions.json";
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
-    public Console() {
+    public Console() throws IllegalStateException {
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
 
         System.out.println("Welcome to University Finder! Find the best suited universities for you based"
                 + " on your interests, major and location!");
-        System.out.println("Enter 0 to quit" + "| Enter 1 to display a list of universities in the database, and start;"
-                + "| Enter any other number to directly start");
-        int start = in.nextInt();
-        displayDatabase(start);
+        System.out.println("Enter 0 to quit" + "| Enter 1 to display a list of universities in the database, and start|"
+                + "Enter any other number to directly start | Enter 3 to load previously recommended universities");
+        start = in.nextInt();
+        start();
+    }
 
+    void start() {
         while (start != 0) {
-
+            loadSuggestions(start);
+            displayDatabase(start);
             System.out.println("Please select interests" + "\n" + "1: E sports" + "\n" + "2: Robotics"
                     + "\n" + "3: Soccer ");
             interestsChoice();
 
             System.out.println("Please select major" + "\n" + "1: CompSci" + "\n" + "2: Math" + "\n" + "3: Commerce ");
-
             majorChoice();
 
             System.out.println("Please select location" + "\n" + "1: Canada" + "\n" + "2: USA" + "\n" + "3: India ");
@@ -45,18 +55,20 @@ public class Console {
             uc = new UserChoices(interests, major, location);
             userList.add(uc);
 
-            System.out.println("Enter 9 to delete current choices"
-                    + "| Enter any number to continue | Enter 0 to quit and see your recommendations");
+            System.out.println("Enter 0 to quit and see your recommendations | Enter 9 to delete current choices"
+                    + "| Enter 2 to save suggested universities | Enter any number to continue | ");
+
             start = in.nextInt();
+
             removeAll(start);
 
+            String s = suggest.suggestion();
+
+            if (start == 0) {
+                System.out.println(s + "\n");
+            }
+            saveSuggestions(start);
         }
-
-        System.out.println("Check these universities out" + "\n");
-
-        System.out.println(suggest.suggestion() + "\n");
-
-
     }
 
     void displayDatabase(int start) {
@@ -64,7 +76,7 @@ public class Console {
             case 1:
                 for (Object data : dataList) {
                     DataChoices dataTemp = (DataChoices) data;
-                    System.out.println(((DataChoices) data).getUniversity());
+                    System.out.println(dataTemp.getUniversity());
                 }
                 break;
             default:
@@ -130,5 +142,35 @@ public class Console {
         if (start == 9) {
             userList.removeAll();
         }
+    }
+
+    // EFFECTS: saves the suggestions to file
+    private void saveSuggestions(int start) {
+        if (start == 2) {
+            try {
+                jsonWriter.open();
+                jsonWriter.write(suggest);
+                jsonWriter.close();
+
+                System.out.println("Saved to " + JSON_STORE);
+            } catch (FileNotFoundException e) {
+                System.out.println("Unable to write to file: " + JSON_STORE);
+            }
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads workroom from file
+    void loadSuggestions(int start) {
+        if (start == 3) {
+            try {
+                suggest = jsonReader.read();
+                System.out.println(suggest.getSuggestionList() + "\n");
+                System.out.println("Loaded from " + JSON_STORE);
+            } catch (IOException e) {
+                System.out.println("Unable to read from file: " + JSON_STORE);
+            }
+        }
+
     }
 }
