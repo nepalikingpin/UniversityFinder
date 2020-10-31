@@ -5,13 +5,12 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.stream.Stream;
 
 import model.SuggestUniversity;
 import org.json.*;
 
-// Represents a reader that reads workroom from JSON data stored in file
+// Represents a reader that reads suggestionList from SuggestUniversity as an JSON Array from JSON data stored in file
 public class JsonReader {
     private String source;
 
@@ -39,7 +38,7 @@ public class JsonReader {
         return contentBuilder.toString();
     }
 
-    // EFFECTS: parses workroom from JSON object and returns it
+    // EFFECTS: parses suggestionList, and returns it as a SuggestUniversity object
     private SuggestUniversity parseSuggestUniversity(JSONObject jsonObject) {
         SuggestUniversity  suggestUniversity = new SuggestUniversity();
         JSONArray jsonArray = jsonObject.getJSONArray("Suggested");

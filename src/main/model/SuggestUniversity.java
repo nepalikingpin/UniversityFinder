@@ -14,28 +14,35 @@ import static java.lang.Integer.min;
 public class SuggestUniversity implements Writable {
     private ChoicesList<Object> userList;
     private ArrayList<Object> dataList;
-    private ArrayList<String> suggestionList = new ArrayList<>();
+    private ArrayList<String> suggestionList;
     private String universities;
+
     //MODIFIES: this
     //EFFECTS: creates a SuggestUniversity object and assigns userList and dataList
-
     public SuggestUniversity(ChoicesList<Object> userList, ArrayList<Object> dataList) {
         this.userList = userList;
         this.dataList = dataList;
+        suggestionList = new ArrayList<>();
     }
 
-    public SuggestUniversity() { //Testing
+    //EFFECTS: created a SuggestUniversity object
+    //         used just for JSON testing purposes
+    public SuggestUniversity() {
         suggestionList = new ArrayList<>();
 
     }
-    //EFFECTS: compares interests, major and location of userList object with every object in dataList; and prints
-    // out the related university if the match is found
 
+    //MODIFIES: this
+    //EFFECTS: adds 2 values to suggestionList
+    //         used just for JSON testing purposes
     public void addTestingValues() {
         this.suggestionList.add("TestVal 1");
         this.suggestionList.add("TestVal 2");
     }
 
+    //MODIFIES: this
+    //EFFECTS: compares interests, major and location of userList object with every object in dataList; and prints
+    // out the related university if the match is found
     public String suggestion() {
         for (int i = 0; i < userList.size(); i++) {
             UserChoices userTemp = (UserChoices) userList.get(i);
@@ -64,24 +71,24 @@ public class SuggestUniversity implements Writable {
         }
     }
 
+    //MODIFIES: this
+    //EFFECTS: adds the suggestions to suggestionList
+    //         used for reading JSON files
     public void addToSuggestionList(String suggestion) {
         suggestionList.add(suggestion);
     }
 
+    //EFFECTS: returns suggestionList
     public ArrayList<String> getSuggestionList() {
         return this.suggestionList;
     }
 
-//    public void loadSuggestions(ArrayList<String> suggestionList) {
-//        for (int i = 0; i < suggestionList.size(); i++) {
-//            this.suggestionList.add(suggestionList.get(i));
-//        }
-//    }
-
+    //EFFECTS: returns the size of suggestionList
     public int listSize() {
         return suggestionList.size();
     }
 
+    //EFFECTS: returns json object of suggestionList
     @Override
     public JSONObject toJson() throws NullPointerException {
         JSONObject json = new JSONObject();
@@ -89,7 +96,7 @@ public class SuggestUniversity implements Writable {
         return json;
     }
 
-    // EFFECTS: returns things in this workroom as a JSON array
+    // EFFECTS: returns suggestionList as a json array
     private JSONArray suggestedToJson() throws NullPointerException {
         JSONArray jsonArray = new JSONArray();
         for (int i = 0; i < suggestionList.size(); i++) {
