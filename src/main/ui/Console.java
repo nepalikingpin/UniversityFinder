@@ -35,12 +35,12 @@ public class Console {
         System.out.println("Enter 0 to quit" + "| Enter 1 to display a list of universities in the database, and start|"
                 + "Enter any other number to directly start | Enter 3 to load previously recommended universities");
         start = in.nextInt();
+        loadSuggestions(start);
         start();
     }
 
     void start() {
         while (start != 0) {
-            loadSuggestions(start);
             displayDatabase(start);
             System.out.println("Please select interests" + "\n" + "1: E sports" + "\n" + "2: Robotics"
                     + "\n" + "3: Soccer ");
@@ -170,7 +170,7 @@ public class Console {
             } catch (IOException e) {
                 System.out.println("Unable to read from file: " + JSON_STORE);
             }
+            this.start = 0;
         }
-
     }
 }
