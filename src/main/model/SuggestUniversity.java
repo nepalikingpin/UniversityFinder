@@ -15,7 +15,7 @@ public class SuggestUniversity implements Writable {
     private ChoicesList<Object> userList;
     private ArrayList<Object> dataList;
     private ArrayList<String> suggestionList;
-    private String universities;
+    private String universities = "";
 
     //MODIFIES: this
     //EFFECTS: creates a SuggestUniversity object and assigns userList and dataList

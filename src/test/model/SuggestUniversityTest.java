@@ -39,7 +39,7 @@ public class SuggestUniversityTest {
 
         SuggestUniversity suggestion = new SuggestUniversity(userList, dataList);
 
-        assertEquals("nullUC Berkley" + "\n",suggestion.suggestion());
+        assertEquals("UC Berkley" + "\n",suggestion.suggestion());
     }
 
     @Test
@@ -54,7 +54,7 @@ public class SuggestUniversityTest {
 
         SuggestUniversity suggestion = new SuggestUniversity(userList, dataList);
 
-        assertEquals("nullUC Berkley" + "\n",suggestion.suggestion());
+        assertEquals("UC Berkley" + "\n",suggestion.suggestion());
     }
 
     @Test
@@ -69,7 +69,7 @@ public class SuggestUniversityTest {
 
         SuggestUniversity suggestion = new SuggestUniversity(userList, dataList);
 
-        assertEquals("nullUC Berkley" + "\n",suggestion.suggestion());
+        assertEquals("UC Berkley" + "\n",suggestion.suggestion());
     }
 
     @Test
@@ -84,7 +84,7 @@ public class SuggestUniversityTest {
 
         SuggestUniversity suggestion = new SuggestUniversity(userList, dataList);
 
-        assertEquals("nullUC Berkley" + "\n",suggestion.suggestion());
+        assertEquals("UC Berkley" + "\n",suggestion.suggestion());
     }
 
     @Test
@@ -99,7 +99,7 @@ public class SuggestUniversityTest {
 
         SuggestUniversity suggestion = new SuggestUniversity(userList, dataList);
 
-        assertEquals("nullUC Berkley" + "\n",suggestion.suggestion());
+        assertEquals("UC Berkley" + "\n",suggestion.suggestion());
     }
 
     @Test
@@ -114,7 +114,7 @@ public class SuggestUniversityTest {
 
         SuggestUniversity suggestion = new SuggestUniversity(userList, dataList);
 
-        assertEquals("nullUC Berkley" + "\n"+ "IIT Bombay" +"\n",suggestion.suggestion());
+        assertEquals("UC Berkley" + "\n"+ "IIT Bombay" +"\n",suggestion.suggestion());
 
     }
 
@@ -135,7 +135,7 @@ public class SuggestUniversityTest {
 
         SuggestUniversity suggestion = new SuggestUniversity(userList, dataList);
 
-        assertEquals("nullUC Berkley" + "\n"+ "UCSD" +"\n" + "NYU" + "\n"+ "Stanford" +"\n" + "UofC" +"\n"
+        assertEquals("UC Berkley" + "\n"+ "UCSD" +"\n" + "NYU" + "\n"+ "Stanford" +"\n" + "UofC" +"\n"
                 ,suggestion.suggestion());
     }
 
