@@ -7,7 +7,9 @@ import persistence.JsonWriter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 
 public class Console {
     int start;
@@ -17,6 +19,8 @@ public class Console {
     UserChoices uc = new UserChoices("", "", "");
     ChoicesList<Object> userList = new ChoicesList<Object>();
     ArrayList<Object> dataList = new ArrayList<>();
+    ArrayList<String> string;
+    Set<String> set = new HashSet<>();
     DataChoices dc = new DataChoices("","","","");
     AddToData atd = new AddToData(dc, dataList);
     SuggestUniversity suggest = new SuggestUniversity(userList, dataList);
@@ -62,15 +66,23 @@ public class Console {
 
             removeAll(start);
 
-            String s = suggest.suggestion();
+            string = suggest.suggestion();
 
             if (start == 0) {
-                System.out.println(s + "\n");
+                listToSet();
             }
             saveSuggestions(start);
         }
     }
 
+    void listToSet() {
+        for (String x : string) {
+            set.add(x);
+        }
+        for (String x : set) {
+            System.out.println(x);
+        }
+    }
     void displayDatabase(int start) {
         switch (start) {
             case 1:
