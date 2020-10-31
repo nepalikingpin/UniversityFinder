@@ -14,18 +14,15 @@ public class SuggestUniversityTest {
     public void SuggestNoUniversityTest() {
         ChoicesList<Object> userList = new ChoicesList<>();
         ArrayList<Object> dataList = new ArrayList<>();
-        try {
-            userList.add(new UserChoices("gaming", "cs", "canada"));
-            dataList.add((new DataChoices("robotics", "math", "usa", "UC Berkley")));
-            dataList.add((new DataChoices("robotics", "Information Technology", "india",
-                    "IIT Bombay")));
 
-            SuggestUniversity suggestion = new SuggestUniversity(userList, dataList);
-            suggestion.suggestion();
-            fail("There are no elements in suggestion list, Null pointer exception should be thrown");
-        } catch (NullPointerException e) {
-            //pass
-        }
+        userList.add(new UserChoices("gaming", "cs", "canada"));
+        dataList.add((new DataChoices("robotics", "math", "usa", "UC Berkley")));
+        dataList.add((new DataChoices("robotics", "Information Technology", "india",
+                "IIT Bombay")));
+
+        SuggestUniversity suggestion = new SuggestUniversity(userList, dataList);
+
+        assertEquals(0,suggestion.suggestion().size());
     }
     @Test
     public void SuggestUniversityBasedOnMajorTest() {
@@ -39,7 +36,7 @@ public class SuggestUniversityTest {
 
         SuggestUniversity suggestion = new SuggestUniversity(userList, dataList);
 
-        assertEquals("UC Berkley" + "\n",suggestion.suggestion());
+        assertEquals("UC Berkley" ,suggestion.suggestion().get(0));
     }
 
     @Test
@@ -54,7 +51,7 @@ public class SuggestUniversityTest {
 
         SuggestUniversity suggestion = new SuggestUniversity(userList, dataList);
 
-        assertEquals("UC Berkley" + "\n",suggestion.suggestion());
+        assertEquals("UC Berkley" ,suggestion.suggestion().get(0));
     }
 
     @Test
@@ -69,7 +66,7 @@ public class SuggestUniversityTest {
 
         SuggestUniversity suggestion = new SuggestUniversity(userList, dataList);
 
-        assertEquals("UC Berkley" + "\n",suggestion.suggestion());
+        assertEquals("UC Berkley" ,suggestion.suggestion().get(0));
     }
 
     @Test
@@ -84,7 +81,7 @@ public class SuggestUniversityTest {
 
         SuggestUniversity suggestion = new SuggestUniversity(userList, dataList);
 
-        assertEquals("UC Berkley" + "\n",suggestion.suggestion());
+        assertEquals("UC Berkley" ,suggestion.suggestion().get(0));
     }
 
     @Test
@@ -99,7 +96,7 @@ public class SuggestUniversityTest {
 
         SuggestUniversity suggestion = new SuggestUniversity(userList, dataList);
 
-        assertEquals("UC Berkley" + "\n",suggestion.suggestion());
+        assertEquals("UC Berkley" ,suggestion.suggestion().get(0));
     }
 
     @Test
@@ -114,7 +111,8 @@ public class SuggestUniversityTest {
 
         SuggestUniversity suggestion = new SuggestUniversity(userList, dataList);
 
-        assertEquals("UC Berkley" + "\n"+ "IIT Bombay" +"\n",suggestion.suggestion());
+        assertEquals("UC Berkley" + "IIT Bombay",
+                suggestion.suggestion().get(0)+suggestion.suggestion().get(1));
 
     }
 
@@ -135,25 +133,11 @@ public class SuggestUniversityTest {
 
         SuggestUniversity suggestion = new SuggestUniversity(userList, dataList);
 
-        assertEquals("UC Berkley" + "\n"+ "UCSD" +"\n" + "NYU" + "\n"+ "Stanford" +"\n" + "UofC" +"\n"
-                ,suggestion.suggestion());
+        assertEquals("UC Berkley" + "UCSD" + "NYU" + "Stanford" + "UofC"
+                ,suggestion.suggestion().get(0)+suggestion.suggestion().get(1)
+                        +suggestion.suggestion().get(2)+suggestion.suggestion().get(3)+suggestion.suggestion().get(4));
     }
 
-//    @Test
-//    public void emptyJsonNullPointerTest() {
-//        ChoicesList<Object> userList = new ChoicesList<>();
-//        ArrayList<Object> dataList = new ArrayList<>();
-//        try {
-//            userList.add(new UserChoices("gaming", "math", "canada"));
-//            dataList.add((new DataChoices("empty", "empty", "empty", "empty")));
-//
-//            SuggestUniversity suggestion = new SuggestUniversity(userList, dataList);
-//            suggestion.toJson();
-//            fail("There should be no elements in suggestion list");
-//        } catch (NullPointerException e) {
-//            //pass
-//        }
-//    }
 
 
 }

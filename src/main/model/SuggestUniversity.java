@@ -43,7 +43,7 @@ public class SuggestUniversity implements Writable {
     //MODIFIES: this
     //EFFECTS: compares interests, major and location of userList object with every object in dataList; and prints
     // out the related university if the match is found
-    public String suggestion() {
+    public ArrayList<String> suggestion() {
         for (int i = 0; i < userList.size(); i++) {
             UserChoices userTemp = (UserChoices) userList.get(i);
 
@@ -60,15 +60,7 @@ public class SuggestUniversity implements Writable {
                 }
             }
         }
-        if (!suggestionList.isEmpty()) {
-            for (int i = 0; i < min(suggestionList.size(), 5); i++) {
-
-                universities += suggestionList.get(i) + "\n";
-            }
-            return universities;
-        } else {
-            throw new NullPointerException();
-        }
+        return suggestionList;
     }
 
     //MODIFIES: this
