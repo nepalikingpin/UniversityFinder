@@ -83,6 +83,7 @@ public class Console {
             System.out.println(x);
         }
     }
+
     void displayDatabase(int start) {
         switch (start) {
             case 1:
