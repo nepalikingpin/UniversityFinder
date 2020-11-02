@@ -1,5 +1,7 @@
 package persistence;
 
+// Code partly taken from JsonSerializationDemo
+
 import model.SuggestUniversity;
 import org.junit.jupiter.api.Test;
 
@@ -11,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 public class JsonReaderTest {
 
+    // Code partly taken from JsonSerializationDemo
     @Test
     void testReaderNonExistentFile() {
         JsonReader reader = new JsonReader("./data/noSuchFile.json");
@@ -22,6 +25,7 @@ public class JsonReaderTest {
         }
     }
 
+    // Code partly taken from JsonSerializationDemo
     @Test
     void testReaderEmptyWorkRoom() {
         JsonReader reader = new JsonReader("./data/emptySuggestions.json");
@@ -33,6 +37,7 @@ public class JsonReaderTest {
         }
     }
 
+    // Code partly taken from JsonSerializationDemo
     @Test
     void testReaderGeneralWorkRoom() {
         JsonReader reader = new JsonReader("./data/suggestions.json");

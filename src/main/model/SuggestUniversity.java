@@ -6,7 +6,7 @@ import persistence.Writable;
 
 import java.util.ArrayList;
 
-import static java.lang.Integer.min;
+// Code partly taken from JsonSerializationDemo
 
 //Class to suggest the university to user, if the interests or major or location of the UserChoices object in userlist
 // are the same as DataChoices object in the dataList
@@ -80,6 +80,7 @@ public class SuggestUniversity implements Writable {
         return suggestionList.size();
     }
 
+    // Code partly taken from JsonSerializationDemo
     //EFFECTS: returns json object of suggestionList
     @Override
     public JSONObject toJson() throws NullPointerException {
@@ -88,6 +89,7 @@ public class SuggestUniversity implements Writable {
         return json;
     }
 
+    // Code partly taken from JsonSerializationDemo
     // EFFECTS: returns suggestionList as a json array
     private JSONArray suggestedToJson() throws NullPointerException {
         JSONArray jsonArray = new JSONArray();

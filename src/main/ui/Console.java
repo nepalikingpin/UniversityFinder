@@ -1,5 +1,7 @@
 package ui;
 
+// Code partly taken from JsonSerializationDemo
+
 import model.*;
 import persistence.JsonReader;
 import persistence.JsonWriter;
@@ -17,7 +19,7 @@ public class Console {
     String major = "";
     String location = "";
     UserChoices uc = new UserChoices("", "", "");
-    ChoicesList<Object> userList = new ChoicesList<Object>();
+    ChoicesList<Object> userList = new ChoicesList<>();
     ArrayList<Object> dataList = new ArrayList<>();
     ArrayList<String> string;
     Set<String> set = new HashSet<>();
@@ -157,6 +159,7 @@ public class Console {
         }
     }
 
+    // Code partly taken from JsonSerializationDemo
     // EFFECTS: saves the suggestions to file
     private void saveSuggestions(int start) {
         if (start == 2) {
@@ -172,6 +175,7 @@ public class Console {
         }
     }
 
+    // Code partly taken from JsonSerializationDemo
     // MODIFIES: this
     // EFFECTS: loads workroom from file
     void loadSuggestions(int start) {

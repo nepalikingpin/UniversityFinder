@@ -1,6 +1,6 @@
 package persistence;
 
-
+// Code partly taken from JsonSerializationDemo
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -14,11 +14,13 @@ import org.json.*;
 public class JsonReader {
     private String source;
 
+    // Code partly taken from JsonSerializationDemo
     // EFFECTS: constructs reader to read from source file
     public JsonReader(String source) {
         this.source = source;
     }
 
+    // Code partly taken from JsonSerializationDemo
     // EFFECTS: reads workroom from file and returns it;
     // throws IOException if an error occurs reading data from file
     public SuggestUniversity read() throws IOException {
@@ -27,6 +29,7 @@ public class JsonReader {
         return parseSuggestUniversity(jsonObject);
     }
 
+    // Code partly taken from JsonSerializationDemo
     // EFFECTS: reads source file as string and returns it
     private String readFile(String source) throws IOException {
         StringBuilder contentBuilder = new StringBuilder();
@@ -38,6 +41,7 @@ public class JsonReader {
         return contentBuilder.toString();
     }
 
+    // Code partly taken from JsonSerializationDemo
     // EFFECTS: parses suggestionList, and returns it as a SuggestUniversity object
     private SuggestUniversity parseSuggestUniversity(JSONObject jsonObject) {
         SuggestUniversity  suggestUniversity = new SuggestUniversity();

@@ -1,5 +1,7 @@
 package persistence;
 
+// Code partly taken from JsonSerializationDemo
+
 import model.SuggestUniversity;
 import org.junit.jupiter.api.Test;
 
@@ -10,6 +12,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public class JsonWriterTest {
+
+    // Code partly taken from JsonSerializationDemo
     @Test
     void testWriterSuggestions() {
         try {
@@ -34,6 +38,7 @@ public class JsonWriterTest {
         }
     }
 
+    // Code partly taken from JsonSerializationDemo
     @Test
     void testWriterEmptySuggestions() {
         try {
@@ -54,6 +59,8 @@ public class JsonWriterTest {
             fail("Exception should not have been thrown");
         }
     }
+
+    // Code partly taken from JsonSerializationDemo
     @Test
     void testWriterInvalidFile() {
         try {
