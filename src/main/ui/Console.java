@@ -31,7 +31,9 @@ public class Console implements ActionListener {
     AddToData atd = new AddToData(dc, dataList);
     SuggestUniversity suggest = new SuggestUniversity(userList, dataList);
     String guiDisplay = "";
-
+    boolean interestsSelected = false;
+    boolean majorSelected = false;
+    boolean locationSelected = false;
     Scanner in = new Scanner(System.in);
     private static final String JSON_STORE = "./data/universitySuggestions.json";
     private JsonWriter jsonWriter;
@@ -39,13 +41,22 @@ public class Console implements ActionListener {
 
     JFrame frame;
     JPanel initialPanel;
-    JPanel secondPanel;
+    JPanel interestsPanel;
+    JPanel majorPanel;
+    JPanel locationPanel;
     JPanel thirdPanel;
-    JButton b1;
-    JButton b2;
-    JButton b3;
-    JButton b4;
+    JButton initialPanelB1;
+    JButton initialPanelB2;
+    JButton initialPanelB3;
+    JButton thirdPanelB1;
+    JButton thirdPanelB2;
+    JButton thirdPanelB3;
+    JButton thirdPanelB4;
     JLabel label;
+
+    JComboBox choicesList;
+    JComboBox majorList;
+    JComboBox locationList;
 
     public Console() throws IllegalStateException {
         jsonWriter = new JsonWriter(JSON_STORE);
@@ -57,9 +68,23 @@ public class Console implements ActionListener {
 
     void initializeGui() {
         frame = new JFrame();
+        initialPanel = new JPanel();
+        initialPanel.setBorder(BorderFactory.createEmptyBorder(50,50,50,50));
+        initialPanel.setLayout(new GridLayout(0,1));
+
+        interestsPanel = new JPanel();
+        interestsPanel.setBorder(BorderFactory.createEmptyBorder(30,30,10,50));
+        interestsPanel.setLayout(new GridLayout(2,1));
+
+        majorPanel = new JPanel();
+        majorPanel.setBorder(BorderFactory.createEmptyBorder(30,30,10,50));
+        majorPanel.setLayout(new GridLayout(2,1));
+
+        locationPanel = new JPanel();
+        locationPanel.setBorder(BorderFactory.createEmptyBorder(30,30,10,50));
+        locationPanel.setLayout(new GridLayout(2,1));
 
         sceneOne();
-
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle("University Finder");
         frame.pack();
@@ -67,9 +92,7 @@ public class Console implements ActionListener {
     }
 
     void sceneOne() {
-        initialPanel = new JPanel();
-        initialPanel.setBorder(BorderFactory.createEmptyBorder(30,30,10,50));
-        initialPanel.setLayout(new GridLayout(0,1));
+
 
         label = new JLabel("<html>" + "Welcome to University Finder! Find the best suited universities for you "
                 + "based on your interests, major and location!" + "</html>");
@@ -78,123 +101,109 @@ public class Console implements ActionListener {
         label = new JLabel("\n");
         initialPanel.add(label);
 
-        b1 = new JButton("Display List of Universities (and start)");
-        b1.addActionListener(this);
-        initialPanel.add(b1);
+        initialPanelB1 = new JButton("Display List of Universities (and start)");
+        initialPanelB1.addActionListener(this);
+        initialPanel.add(initialPanelB1);
 
-        b2 = new JButton("Start the Program");
-        b2.addActionListener(this);
-        initialPanel.add(b2);
+        initialPanelB2 = new JButton("Start the Program");
+        initialPanelB2.addActionListener(this);
+        initialPanel.add(initialPanelB2);
 
-        b3 = new JButton("Load previous recommendations");
-        b3.addActionListener(this);
-        initialPanel.add(b3);
+        initialPanelB3 = new JButton("Load previous recommendations");
+        initialPanelB3.addActionListener(this);
+        initialPanel.add(initialPanelB3);
 
         frame.add(initialPanel, BorderLayout.CENTER);
 
-
     }
 
-    void sceneTwo() {
+    void sceneTwoInterests() {
         frame.remove(initialPanel);
 
-        secondPanel = new JPanel();
-        secondPanel.setBorder(BorderFactory.createEmptyBorder(30,30,10,50));
-        secondPanel.setLayout(new GridLayout(0,1));
-
         sceneTwoSelectInterests();
-        sceneTwoSelectMajor();
-        sceneTwoSelectLocation();
 
-        frame.add(secondPanel, BorderLayout.CENTER);
+        frame.add(interestsPanel, BorderLayout.CENTER);
         frame.validate();
 
     }
 
     void sceneTwoSelectInterests() {
         label = new JLabel("<html>" + "Please select your interests" + "</html>");
-        secondPanel.add(label);
+        interestsPanel.add(label);
+        String[] list = { "E sports", "Robotics", "Soccer"};
 
-        b1 = new JButton("E sports");
-        secondPanel.add(b1);
+        choicesList = new JComboBox(list);
+        interestsPanel.add(choicesList);
+        choicesList.addActionListener(this);
 
-        b2 = new JButton("Robotics");
-        secondPanel.add(b2);
+    }
 
-        b3 = new JButton("Soccer");
-        secondPanel.add(b3);
+    void sceneTwoMajor() {
+        frame.remove(interestsPanel);
+        sceneTwoSelectMajor();
+
+        frame.add(majorPanel, BorderLayout.CENTER);
+        frame.validate();
     }
 
     void sceneTwoSelectMajor() {
         label = new JLabel("<html>" + "Please select your intended Major" + "</html>");
-        secondPanel.add(label);
+        majorPanel.add(label);
+        String[] list = { "Comp Sci", "Math", "Commerce"};
 
-        b1 = new JButton("CompSci");
-        secondPanel.add(b1);
+        majorList = new JComboBox(list);
+        majorPanel.add(majorList);
+        majorList.addActionListener(this);
+    }
 
-        b2 = new JButton("Math");
-        secondPanel.add(b2);
+    void sceneTwoLocation() {
+        frame.remove(majorPanel);
+        sceneTwoSelectLocation();
 
-        b3 = new JButton("Commerce");
-        secondPanel.add(b3);
+        frame.add(locationPanel, BorderLayout.CENTER);
+        frame.validate();
     }
 
     void sceneTwoSelectLocation() {
         label = new JLabel("<html>" + "Please select your intended location" + "</html>");
-        secondPanel.add(label);
+        locationPanel.add(label);
+        String[] list = { "Canada", "USA", "India"};
 
-        b1 = new JButton("CompSci");
-        secondPanel.add(b1);
-
-        b2 = new JButton("Math");
-        secondPanel.add(b2);
-
-        b3 = new JButton("Commerce");
-        secondPanel.add(b3);
+        locationList = new JComboBox(list);
+        locationPanel.add(locationList);
+        locationList.addActionListener(this);
     }
 
-    void sceneThree() {
-        frame.remove(secondPanel);
-
-        thirdPanel = new JPanel();
-        thirdPanel.setBorder(BorderFactory.createEmptyBorder(30,30,10,50));
-        thirdPanel.setLayout(new GridLayout(0,1));
-
-        sceneThreeOptions();
-
-        frame.add(thirdPanel, BorderLayout.CENTER);
-        frame.validate();
-    }
-
-    void sceneThreeOptions() {
-
-        b1 = new JButton("Save Suggested Universities");
-        thirdPanel.add(b1);
-
-        b2 = new JButton("Add More Choices");
-        thirdPanel.add(b2);
-
-        b3 = new JButton("Delete Current Choices");
-        thirdPanel.add(b3);
-
-        b4 = new JButton("Quit and See Recommendations");
-    }
+//    void sceneThree() {
+//        frame.remove(interestsPanel);
+//
+//        thirdPanel = new JPanel();
+//        thirdPanel.setBorder(BorderFactory.createEmptyBorder(30,30,10,50));
+//        thirdPanel.setLayout(new GridLayout(0,1));
+//
+//        sceneThreeOptions();
+//
+//        frame.add(thirdPanel, BorderLayout.CENTER);
+//        frame.validate();
+//    }
+//
+//    void sceneThreeOptions() {
+//
+//        thirdPanelB1 = new JButton("Save Suggested Universities");
+//        thirdPanel.add(thirdPanelB1);
+//
+//        thirdPanelB2 = new JButton("Add More Choices");
+//        thirdPanel.add(thirdPanelB2);
+//
+//        thirdPanelB3 = new JButton("Delete Current Choices");
+//        thirdPanel.add(thirdPanelB3);
+//
+//        thirdPanelB4 = new JButton("Quit and See Recommendations");
+//        thirdPanel.add(thirdPanelB4);
+//    }
 
     void start(int start) {
         while (start != 0) {
-            displayDatabase(start);
-            System.out.println("Please select interests" + "\n" + "1: E sports" + "\n" + "2: Robotics"
-                    + "\n" + "3: Soccer ");
-            interestsChoice();
-
-            System.out.println("Please select major" + "\n" + "1: CompSci" + "\n" + "2: Math" + "\n" + "3: Commerce ");
-            majorChoice();
-
-            System.out.println("Please select location" + "\n" + "1: Canada" + "\n" + "2: USA" + "\n" + "3: India ");
-            locationChoice();
-
-            uc = new UserChoices(interests, major, location);
-            userList.add(uc);
 
             System.out.println("Enter 0 to quit and see your recommendations | Enter 9 to delete current choices"
                     + "| Enter 2 to save suggested universities | Enter any number to continue | ");
@@ -222,20 +231,23 @@ public class Console implements ActionListener {
     }
 
     void displayDatabase(int start) {
+        String universitiesInDatabase = "";
         switch (start) {
             case 1:
                 for (Object data : dataList) {
                     DataChoices dataTemp = (DataChoices) data;
-                    System.out.println(dataTemp.getUniversity());
+                    universitiesInDatabase += dataTemp.getUniversity();
+
                 }
                 break;
             default:
                 break;
         }
+        label = new JLabel("<html>" + universitiesInDatabase + "</html>");
+        interestsPanel.add(label,0);
     }
 
-    void interestsChoice() {
-        int interestChoice = in.nextInt();
+    void interestsChoice(int interestChoice) {
 
         switch (interestChoice) {
             case 1:
@@ -250,10 +262,10 @@ public class Console implements ActionListener {
             default:
                 throw new IllegalStateException("Unexpected value: " + interestChoice);
         }
+
     }
 
-    void majorChoice() {
-        int majorChoice = in.nextInt();
+    void majorChoice(int majorChoice) {
 
         switch (majorChoice) {
             case 1:
@@ -270,8 +282,7 @@ public class Console implements ActionListener {
         }
     }
 
-    void locationChoice() {
-        int locationChoice = in.nextInt();
+    void locationChoice(int locationChoice) {
 
         switch (locationChoice) {
             case 1:
@@ -286,6 +297,7 @@ public class Console implements ActionListener {
             default:
                 throw new IllegalStateException("Unexpected value: " + locationChoice);
         }
+
     }
 
     void removeAll(int start) {
@@ -328,13 +340,62 @@ public class Console implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Object obj = e.getSource();
 
-        if (obj == b1) {
+        if (obj == initialPanelB1) {
             displayDatabase(1);
-            sceneTwo();
-        } else if (obj == b2) {
+            sceneTwoInterests();
+        } else if (obj == initialPanelB2) {
             start(7);
-        } else if (obj == b3) {
+        } else if (obj == initialPanelB3) {
             loadSuggestions();
+        } else if (obj == choicesList) {
+            choicesManagerInterests();
+        } else if (obj == majorList) {
+            choicesManagerMajor();
+        } else if (obj == locationList) {
+            choicesManagerLocation();
         }
+    }
+
+    void choicesManagerInterests() {
+
+        if (choicesList.getSelectedItem().toString() == "E sports") {
+            interestsChoice(1);
+        } else if (choicesList.getSelectedItem().toString() == "Robotics") {
+            interestsChoice(2);
+        } else if (choicesList.getSelectedItem().toString() == "Soccer") {
+            interestsChoice(3);
+        }
+
+        sceneTwoMajor();
+    }
+
+    void choicesManagerMajor() {
+        if (majorList.getSelectedItem().toString() == "Comp Sci") {
+            majorChoice(1);
+        } else if (majorList.getSelectedItem().toString() == "Math") {
+            majorChoice(2);
+        } else if (majorList.getSelectedItem().toString() == "Commerce") {
+            majorChoice(3);
+        }
+
+        sceneTwoLocation();
+    }
+
+    void choicesManagerLocation() {
+        if (locationList.getSelectedItem().toString() == "Canada") {
+            locationChoice(1);
+        } else if (locationList.getSelectedItem().toString() == "USA") {
+            locationChoice(2);
+        } else if (locationList.getSelectedItem().toString() == "India") {
+            locationChoice(3);
+        }
+
+        userChoicesObject();
+    }
+
+    void userChoicesObject() {
+        uc = new UserChoices(interests, major, location);
+        userList.add(uc);
+        System.out.println("Created User Choices Object");
     }
 }
