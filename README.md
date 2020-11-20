@@ -25,9 +25,13 @@ highly ranked university that also satisfies their extracurricular interests.
 
 **User Stories**
 - As a user, I want to be able to add my interests, major choice and location for finding a university 
-and add to my choices.
-- As a user, I want to be able to view the all universities in the database
-- As a user, I want to be able to get the website / full information page link of the recommended universities
-- As a user, I want to be able to view the top universities recommended for me based on my choices.
-- As a user, I want to be able to save the universities recommended for me, to a file.
-- As a user, I want to be able to load the recommended universities from the file.
+and add to my choices. I want to do this interactively by selecting options on the GUI panel.
+- As a user, I want to be able to view the all universities in the database. I want these universities to be displayed
+in a pop up message.
+- As a user, I want to be able to get the website / full information page link of the recommended universities.
+- As a user, I want to be able to view the top universities recommended for me based on my choices. I want
+this information to be displayed as a pop up message.
+- As a user, I want to be able to save the universities recommended for me, to a file. I want to be able to do this
+interactively, by clicking a button after I am finished selecting these universities.
+- As a user, I want to be able to load the recommended universities from the file. I want to be able to do this 
+interactively, by clicking a button as soon as the program starts. 
