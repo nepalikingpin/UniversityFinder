@@ -1,7 +1,5 @@
 package ui;
 
-// Code partly taken from JsonSerializationDemo
-
 import model.*;
 import persistence.JsonReader;
 import persistence.JsonWriter;
@@ -10,13 +8,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Scanner;
 import java.util.Set;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+
+// Handles the entire UI finctionality of the application
 public class Console implements ActionListener {
 
     String interests = "";
@@ -31,10 +34,7 @@ public class Console implements ActionListener {
     AddToData atd = new AddToData(dc, dataList);
     SuggestUniversity suggest = new SuggestUniversity(userList, dataList);
     String guiDisplay = "";
-    boolean interestsSelected = false;
-    boolean majorSelected = false;
-    boolean locationSelected = false;
-    Scanner in = new Scanner(System.in);
+
     private static final String JSON_STORE = "./data/universitySuggestions.json";
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
@@ -45,44 +45,59 @@ public class Console implements ActionListener {
     JPanel majorPanel;
     JPanel locationPanel;
     JPanel thirdPanel;
+    JPanel quitPanel;
     JButton initialPanelB1;
     JButton initialPanelB2;
     JButton initialPanelB3;
     JButton thirdPanelB1;
     JButton thirdPanelB2;
     JButton thirdPanelB3;
-    JButton thirdPanelB4;
+
     JLabel label;
 
     JComboBox choicesList;
     JComboBox majorList;
     JComboBox locationList;
 
-    public Console() throws IllegalStateException {
+    Clip clip;
+    AudioInputStream audioInputStream;
+
+
+    //MODIFIES: this
+    //EFFECTS: creates a new jsonWriter and jsonReader object
+    //         calls the initializeGui method to initialize the graphical user interface
+    public Console() throws IllegalStateException, IOException {
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
-
         initializeGui();
-
     }
 
-    void initializeGui() {
+    //MODIFIES: this
+    //EFFECTS: creates and initializes the JFrame
+    //         creates and initializes the initial, major, location and quit JPanels
+    //         calls sceneOne() to start displaying the GUI
+    void initializeGui() throws IOException {
+
         frame = new JFrame();
         initialPanel = new JPanel();
-        initialPanel.setBorder(BorderFactory.createEmptyBorder(50,50,50,50));
+        initialPanel.setBorder(BorderFactory.createEmptyBorder(30,30,50,30));
         initialPanel.setLayout(new GridLayout(0,1));
 
         interestsPanel = new JPanel();
-        interestsPanel.setBorder(BorderFactory.createEmptyBorder(30,30,10,50));
+        interestsPanel.setBorder(BorderFactory.createEmptyBorder(30,30,10,30));
         interestsPanel.setLayout(new GridLayout(2,1));
 
         majorPanel = new JPanel();
-        majorPanel.setBorder(BorderFactory.createEmptyBorder(30,30,10,50));
+        majorPanel.setBorder(BorderFactory.createEmptyBorder(30,30,10,30));
         majorPanel.setLayout(new GridLayout(2,1));
 
         locationPanel = new JPanel();
-        locationPanel.setBorder(BorderFactory.createEmptyBorder(30,30,10,50));
+        locationPanel.setBorder(BorderFactory.createEmptyBorder(30,30,10,30));
         locationPanel.setLayout(new GridLayout(2,1));
+
+        quitPanel = new JPanel();
+        quitPanel.setBorder(BorderFactory.createEmptyBorder(30,30,10,30));
+        quitPanel.setLayout(new GridLayout(2,1));
 
         sceneOne();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -91,8 +106,13 @@ public class Console implements ActionListener {
         frame.setVisible(true);
     }
 
-    void sceneOne() {
+    //MODIFIES: this
+    //EFFECTS: displays the first scene with 2 panels and 3 buttons
+    void sceneOne() throws IOException {
 
+        JLabel imgLabel = new JLabel(new ImageIcon("./data/UniversityFinder.png"));
+
+        initialPanel.add(imgLabel);
 
         label = new JLabel("<html>" + "Welcome to University Finder! Find the best suited universities for you "
                 + "based on your interests, major and location!" + "</html>");
@@ -117,6 +137,9 @@ public class Console implements ActionListener {
 
     }
 
+    //MODIFIES: this
+    //EFFECTS: removes initial panel
+    //         calls the sceneTwoSelectInterests method and validates the panel
     void sceneTwoInterests() {
         frame.remove(initialPanel);
 
@@ -127,6 +150,8 @@ public class Console implements ActionListener {
 
     }
 
+    //MODIFIES: this
+    //EFFECTS: provides a list interests to choose from
     void sceneTwoSelectInterests() {
         label = new JLabel("<html>" + "Please select your interests" + "</html>");
         interestsPanel.add(label);
@@ -135,9 +160,11 @@ public class Console implements ActionListener {
         choicesList = new JComboBox(list);
         interestsPanel.add(choicesList);
         choicesList.addActionListener(this);
-
     }
 
+    //MODIFIES: this
+    //EFFECTS: removes interests panel
+    //         calls the sceneTwoSelectMajor method and validates the panel
     void sceneTwoMajor() {
         frame.remove(interestsPanel);
         sceneTwoSelectMajor();
@@ -146,6 +173,8 @@ public class Console implements ActionListener {
         frame.validate();
     }
 
+    //MODIFIES: this
+    //EFFECTS: provides a list of majors to choose from
     void sceneTwoSelectMajor() {
         label = new JLabel("<html>" + "Please select your intended Major" + "</html>");
         majorPanel.add(label);
@@ -156,6 +185,9 @@ public class Console implements ActionListener {
         majorList.addActionListener(this);
     }
 
+    //MODIFIES: this
+    //EFFECTS: removes major panel
+    //         calls the sceneTwoSelectLocation method and validates the panel
     void sceneTwoLocation() {
         frame.remove(majorPanel);
         sceneTwoSelectLocation();
@@ -164,6 +196,8 @@ public class Console implements ActionListener {
         frame.validate();
     }
 
+    //MODIFIES: this
+    //EFFECTS: provides a list of locations to choose from
     void sceneTwoSelectLocation() {
         label = new JLabel("<html>" + "Please select your intended location" + "</html>");
         locationPanel.add(label);
@@ -174,79 +208,87 @@ public class Console implements ActionListener {
         locationList.addActionListener(this);
     }
 
-//    void sceneThree() {
-//        frame.remove(interestsPanel);
-//
-//        thirdPanel = new JPanel();
-//        thirdPanel.setBorder(BorderFactory.createEmptyBorder(30,30,10,50));
-//        thirdPanel.setLayout(new GridLayout(0,1));
-//
-//        sceneThreeOptions();
-//
-//        frame.add(thirdPanel, BorderLayout.CENTER);
-//        frame.validate();
-//    }
-//
-//    void sceneThreeOptions() {
-//
-//        thirdPanelB1 = new JButton("Save Suggested Universities");
-//        thirdPanel.add(thirdPanelB1);
-//
-//        thirdPanelB2 = new JButton("Add More Choices");
-//        thirdPanel.add(thirdPanelB2);
-//
-//        thirdPanelB3 = new JButton("Delete Current Choices");
-//        thirdPanel.add(thirdPanelB3);
-//
-//        thirdPanelB4 = new JButton("Quit and See Recommendations");
-//        thirdPanel.add(thirdPanelB4);
-//    }
+    //MODIFIES: this
+    //EFFECTS: removes the location panel
+    //         initializes thirdPanel, calls sceneThreeOptions and validates the panel
+    void sceneThree() {
+        frame.remove(locationPanel);
 
-    void start(int start) {
-        while (start != 0) {
+        thirdPanel = new JPanel();
+        thirdPanel.setBorder(BorderFactory.createEmptyBorder(30,30,10,50));
+        thirdPanel.setLayout(new GridLayout(0,1));
 
-            System.out.println("Enter 0 to quit and see your recommendations | Enter 9 to delete current choices"
-                    + "| Enter 2 to save suggested universities | Enter any number to continue | ");
+        sceneThreeOptions();
 
-            start = in.nextInt();
-
-            removeAll(start);
-
-            string = suggest.suggestion();
-
-            if (start == 0) {
-                listToSet();
-            }
-            saveSuggestions(start);
-        }
+        frame.add(thirdPanel, BorderLayout.CENTER);
+        frame.validate();
     }
 
+    //MODIFIES: this
+    //EFFECTS: provides options to save recommendations, delete choices and see the recommendations
+    void sceneThreeOptions() {
+
+        thirdPanelB1 = new JButton("Save Suggested Universities and Quit");
+        thirdPanel.add(thirdPanelB1);
+        thirdPanelB1.addActionListener(this);
+
+        thirdPanelB2 = new JButton("Delete Current Choices");
+        thirdPanel.add(thirdPanelB2);
+        thirdPanelB2.addActionListener(this);
+
+        thirdPanelB3 = new JButton("See Recommendations");
+        thirdPanel.add(thirdPanelB3);
+        thirdPanelB3.addActionListener(this);
+    }
+
+    //MODIFIES: this
+    //EFFECTS: takes in start and calls the methods according to the input
+    void start(int start) {
+        removeAll(start);
+
+        string = suggest.suggestion();
+
+        if (start == 0) {
+            listToSet();
+        }
+        saveSuggestions(start);
+
+    }
+
+    //MODIFIES: this
+    //EFFECTS: displays the recommended universities as a Message Dialog Box
     void listToSet() {
+        String recommendedUnis = "";
         for (String x : string) {
             set.add(x);
         }
         for (String x : set) {
-            System.out.println(x);
+            recommendedUnis += x + "\n";
         }
+        JOptionPane.showMessageDialog(null, recommendedUnis);
+        System.exit(0);
     }
 
+    //MODIFIES: this
+    //EFFECTS: displays all the universities in the database as a Message Dialog Box
     void displayDatabase(int start) {
         String universitiesInDatabase = "";
         switch (start) {
             case 1:
                 for (Object data : dataList) {
                     DataChoices dataTemp = (DataChoices) data;
-                    universitiesInDatabase += dataTemp.getUniversity();
+                    universitiesInDatabase += dataTemp.getUniversity() + "\n";
 
                 }
                 break;
             default:
                 break;
         }
-        label = new JLabel("<html>" + universitiesInDatabase + "</html>");
-        interestsPanel.add(label,0);
+        JOptionPane.showMessageDialog(null, universitiesInDatabase);
     }
 
+    //MODIFIES: this
+    //EFFECTS: sets the interests according to the interestsChoice
     void interestsChoice(int interestChoice) {
 
         switch (interestChoice) {
@@ -262,9 +304,10 @@ public class Console implements ActionListener {
             default:
                 throw new IllegalStateException("Unexpected value: " + interestChoice);
         }
-
     }
 
+    //MODIFIES: this
+    //EFFECTS: sets the major according to the majorChoice
     void majorChoice(int majorChoice) {
 
         switch (majorChoice) {
@@ -282,6 +325,8 @@ public class Console implements ActionListener {
         }
     }
 
+    //MODIFIES: this
+    //EFFECTS: sets the location according to the locationChoice
     void locationChoice(int locationChoice) {
 
         switch (locationChoice) {
@@ -297,16 +342,20 @@ public class Console implements ActionListener {
             default:
                 throw new IllegalStateException("Unexpected value: " + locationChoice);
         }
-
     }
 
+    //MODIFIES: this
+    //EFFECTS: removes all user choices objects from the userList
     void removeAll(int start) {
         if (start == 9) {
             userList.removeAll();
+            JOptionPane.showMessageDialog(null, "Deleted Current Choices From the Database");
+            System.exit(0);
         }
     }
 
     // Code partly taken from JsonSerializationDemo
+    //MODIFIES:
     // EFFECTS: saves the suggestions to file
     private void saveSuggestions(int start) {
         if (start == 2) {
@@ -314,8 +363,8 @@ public class Console implements ActionListener {
                 jsonWriter.open();
                 jsonWriter.write(suggest);
                 jsonWriter.close();
-
-                System.out.println("Saved to " + JSON_STORE);
+                JOptionPane.showMessageDialog(null, "Saved to Database");
+                System.exit(0);
             } catch (FileNotFoundException e) {
                 System.out.println("Unable to write to file: " + JSON_STORE);
             }
@@ -328,23 +377,26 @@ public class Console implements ActionListener {
     void loadSuggestions() {
         try {
             suggest = jsonReader.read();
-            guiDisplay += suggest.getSuggestionList() + "\n";
-            System.out.println(guiDisplay);
+            for (int i = 0; i < suggest.getSuggestionList().size(); i++) {
+                guiDisplay += suggest.getSuggestionList().get(i);
+            }
+            JOptionPane.showMessageDialog(null, guiDisplay);
             System.out.println("Loaded from " + JSON_STORE);
+            System.exit(0);
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
         }
     }
 
+    //EFFECTS: checks which button is pressed and calls the respective backend method
     @Override
     public void actionPerformed(ActionEvent e) {
         Object obj = e.getSource();
-
         if (obj == initialPanelB1) {
             displayDatabase(1);
             sceneTwoInterests();
         } else if (obj == initialPanelB2) {
-            start(7);
+            sceneTwoInterests();
         } else if (obj == initialPanelB3) {
             loadSuggestions();
         } else if (obj == choicesList) {
@@ -353,9 +405,33 @@ public class Console implements ActionListener {
             choicesManagerMajor();
         } else if (obj == locationList) {
             choicesManagerLocation();
+        } else if (obj == thirdPanelB1) {
+            start(2);
+        } else if (obj == thirdPanelB2) {
+            fartSound();
+            start(9);
+        } else if (obj == thirdPanelB3) {
+            start(0);
         }
     }
 
+    //MODIFIES: this
+    //EFFECTS: plays a fart sound if the file exists and is read properly
+    void fartSound() {
+        try {
+            clip = AudioSystem.getClip();
+            audioInputStream = AudioSystem.getAudioInputStream(new File("./data/fart-01.wav")
+                    .getAbsoluteFile());
+            clip.open(audioInputStream);
+            clip.start();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Fart Sound Failed");
+        }
+
+    }
+
+    //EFFECTS: finds the major chosen by the user and sends it to interestsChoice
+    //         calls sceneTwoLocation to set the user selected location
     void choicesManagerInterests() {
 
         if (choicesList.getSelectedItem().toString() == "E sports") {
@@ -369,6 +445,8 @@ public class Console implements ActionListener {
         sceneTwoMajor();
     }
 
+    //EFFECTS: finds the major chosen by the user and sends it to majorChoice
+    //         calls sceneTwoLocation to set the user selected location
     void choicesManagerMajor() {
         if (majorList.getSelectedItem().toString() == "Comp Sci") {
             majorChoice(1);
@@ -381,6 +459,8 @@ public class Console implements ActionListener {
         sceneTwoLocation();
     }
 
+    //EFFECTS: finds the location chosen by the user and sends it to locationChoice
+    //         calls userChoicesObject to display the next panel
     void choicesManagerLocation() {
         if (locationList.getSelectedItem().toString() == "Canada") {
             locationChoice(1);
@@ -393,9 +473,12 @@ public class Console implements ActionListener {
         userChoicesObject();
     }
 
+    //MODIFIES: this
+    //EFFECTS: creates a user choices object and adds it to userList
+    //         calls sceneThree to continue displaying the application
     void userChoicesObject() {
         uc = new UserChoices(interests, major, location);
         userList.add(uc);
-        System.out.println("Created User Choices Object");
+        sceneThree();
     }
 }
