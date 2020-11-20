@@ -19,7 +19,7 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
-// Handles the entire UI finctionality of the application
+// Handles the entire UI functionality of the application
 public class Console implements ActionListener {
 
     String interests = "";
