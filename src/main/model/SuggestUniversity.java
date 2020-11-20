@@ -15,7 +15,6 @@ public class SuggestUniversity implements Writable {
     private ChoicesList<Object> userList;
     private ArrayList<Object> dataList;
     private ArrayList<String> suggestionList;
-    private String universities = "";
 
     //MODIFIES: this
     //EFFECTS: creates a SuggestUniversity object and assigns userList and dataList
@@ -67,7 +66,7 @@ public class SuggestUniversity implements Writable {
     //EFFECTS: adds the suggestions to suggestionList
     //         used for reading JSON files
     public void addToSuggestionList(String suggestion) {
-        suggestionList.add(suggestion);
+        suggestionList.add(suggestion + "\n");
     }
 
     //EFFECTS: returns suggestionList

@@ -46,8 +46,8 @@ public class JsonReaderTest {
             ArrayList<String> storedSuggestions = suggestUniversity.getSuggestionList();
 
             assertEquals(2, storedSuggestions.size());
-            assertEquals("TestVal 1", storedSuggestions.get(0));
-            assertEquals("TestVal 2", storedSuggestions.get(1));
+            assertEquals("TestVal 1" + "\n", storedSuggestions.get(0));
+            assertEquals("TestVal 2" + "\n", storedSuggestions.get(1));
         } catch (IOException e) {
             fail("Couldn't read from file");
         }
