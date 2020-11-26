@@ -43,6 +43,7 @@ public class SuggestUniversity implements Writable {
     //MODIFIES: this
     //EFFECTS: compares interests, major and location of userList object with every object in dataList; and prints
     // out the related university if the match is found
+    // throws new NoSuggestionsException if the suggestion list is empty
     public ArrayList<String> suggestion() throws NoSuggestionsException {
         for (int i = 0; i < userList.size(); i++) {
             UserChoices userTemp = userList.get(i);
