@@ -1,5 +1,6 @@
 package ui;
 
+import exception.NoSuggestionsException;
 import model.*;
 import persistence.JsonReader;
 import persistence.JsonWriter;
@@ -26,12 +27,11 @@ public class Console implements ActionListener {
     String major = "";
     String location = "";
     UserChoices uc = new UserChoices("", "", "");
-    ChoicesList<Object> userList = new ChoicesList<>();
-    ArrayList<Object> dataList = new ArrayList<>();
+    ChoicesList<UserChoices> userList = new ChoicesList<>();
+    ArrayList<DataChoices> dataList = new ArrayList<>();
     ArrayList<String> string;
     Set<String> set = new HashSet<>();
-    DataChoices dc = new DataChoices("","","","");
-    AddToData atd = new AddToData(dc, dataList);
+    AddToData atd = new AddToData(dataList);
     SuggestUniversity suggest = new SuggestUniversity(userList, dataList);
     String guiDisplay = "";
 
@@ -155,7 +155,7 @@ public class Console implements ActionListener {
     void sceneTwoSelectInterests() {
         label = new JLabel("<html>" + "Please select your interests" + "</html>");
         interestsPanel.add(label);
-        String[] list = { "E sports", "Robotics", "Soccer"};
+        String[] list = { "E sports", "Robotics", "Soccer", "Piano"};
 
         choicesList = new JComboBox(list);
         interestsPanel.add(choicesList);
@@ -178,7 +178,7 @@ public class Console implements ActionListener {
     void sceneTwoSelectMajor() {
         label = new JLabel("<html>" + "Please select your intended Major" + "</html>");
         majorPanel.add(label);
-        String[] list = { "Comp Sci", "Math", "Commerce"};
+        String[] list = { "Comp Sci", "Math", "Commerce", "Fine Arts"};
 
         majorList = new JComboBox(list);
         majorPanel.add(majorList);
@@ -201,7 +201,7 @@ public class Console implements ActionListener {
     void sceneTwoSelectLocation() {
         label = new JLabel("<html>" + "Please select your intended location" + "</html>");
         locationPanel.add(label);
-        String[] list = { "Canada", "USA", "India"};
+        String[] list = { "Canada", "USA", "India", "Nauru"};
 
         locationList = new JComboBox(list);
         locationPanel.add(locationList);
@@ -246,13 +246,16 @@ public class Console implements ActionListener {
     void start(int start) {
         removeAll(start);
 
-        string = suggest.suggestion();
-
-        if (start == 0) {
-            listToSet();
+        try {
+            string = suggest.suggestion();
+            if (start == 0) {
+                listToSet();
+            }
+            saveSuggestions(start);
+        } catch (NoSuggestionsException e) {
+            JOptionPane.showMessageDialog(null, "No suggestions found! Please try again");
+            System.exit(0);
         }
-        saveSuggestions(start);
-
     }
 
     //MODIFIES: this
@@ -275,10 +278,9 @@ public class Console implements ActionListener {
         String universitiesInDatabase = "";
         switch (start) {
             case 1:
-                for (Object data : dataList) {
-                    DataChoices dataTemp = (DataChoices) data;
+                for (DataChoices data : dataList) {
+                    DataChoices dataTemp = data;
                     universitiesInDatabase += dataTemp.getUniversity() + "\n";
-
                 }
                 break;
             default:
@@ -301,6 +303,9 @@ public class Console implements ActionListener {
             case 3:
                 interests = "soccer";
                 break;
+            case 4:
+                interests = "piano";
+                break;
             default:
                 throw new IllegalStateException("Unexpected value: " + interestChoice);
         }
@@ -320,6 +325,9 @@ public class Console implements ActionListener {
             case 3:
                 major = "commerce";
                 break;
+            case 4:
+                major = "finearts";
+                break;
             default:
                 throw new IllegalStateException("Unexpected value: " + majorChoice);
         }
@@ -338,6 +346,9 @@ public class Console implements ActionListener {
                 break;
             case 3:
                 location = "india";
+                break;
+            case 4:
+                location = "nauru";
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + locationChoice);
@@ -440,8 +451,9 @@ public class Console implements ActionListener {
             interestsChoice(2);
         } else if (choicesList.getSelectedItem().toString() == "Soccer") {
             interestsChoice(3);
+        } else if (choicesList.getSelectedItem().toString() == "Piano") {
+            interestsChoice(4);
         }
-
         sceneTwoMajor();
     }
 
@@ -454,6 +466,8 @@ public class Console implements ActionListener {
             majorChoice(2);
         } else if (majorList.getSelectedItem().toString() == "Commerce") {
             majorChoice(3);
+        } else if (majorList.getSelectedItem().toString() == "Fine Arts") {
+            majorChoice(4);
         }
 
         sceneTwoLocation();
@@ -468,6 +482,8 @@ public class Console implements ActionListener {
             locationChoice(2);
         } else if (locationList.getSelectedItem().toString() == "India") {
             locationChoice(3);
+        } else if (locationList.getSelectedItem().toString() == "Nauru") {
+            locationChoice(4);
         }
 
         userChoicesObject();

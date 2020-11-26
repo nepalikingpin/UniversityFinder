@@ -11,5 +11,4 @@ public class UserChoices extends Choices {
         this.major = major;
         this.location = location;
     }
-
 }

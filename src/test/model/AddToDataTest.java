@@ -12,9 +12,9 @@ public class AddToDataTest {
     @Test
     public void addToDataTest() {
         DataChoices dataChoices = new DataChoices("", "", "", "");
-        ArrayList<Object> list = new ArrayList<>();
+        ArrayList<DataChoices> list = new ArrayList<>();
 
-        AddToData atd = new AddToData(dataChoices, list);
+        AddToData atd = new AddToData(list);
 
         DataChoices temp = (DataChoices) list.get(0);
 

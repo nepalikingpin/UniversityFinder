@@ -1,5 +1,6 @@
 package model;
 
+import exception.NoSuggestionsException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.Writable;
@@ -12,13 +13,13 @@ import java.util.ArrayList;
 // are the same as DataChoices object in the dataList
 
 public class SuggestUniversity implements Writable {
-    private ChoicesList<Object> userList;
-    private ArrayList<Object> dataList;
+    private ChoicesList<UserChoices> userList;
+    private ArrayList<DataChoices> dataList;
     private ArrayList<String> suggestionList;
 
     //MODIFIES: this
     //EFFECTS: creates a SuggestUniversity object and assigns userList and dataList
-    public SuggestUniversity(ChoicesList<Object> userList, ArrayList<Object> dataList) {
+    public SuggestUniversity(ChoicesList<UserChoices> userList, ArrayList<DataChoices> dataList) {
         this.userList = userList;
         this.dataList = dataList;
         suggestionList = new ArrayList<>();
@@ -42,7 +43,7 @@ public class SuggestUniversity implements Writable {
     //MODIFIES: this
     //EFFECTS: compares interests, major and location of userList object with every object in dataList; and prints
     // out the related university if the match is found
-    public ArrayList<String> suggestion() {
+    public ArrayList<String> suggestion() throws NoSuggestionsException {
         for (int i = 0; i < userList.size(); i++) {
             UserChoices userTemp = (UserChoices) userList.get(i);
 
@@ -58,6 +59,9 @@ public class SuggestUniversity implements Writable {
                     }
                 }
             }
+        }
+        if (suggestionList.size() == 0) {
+            throw new NoSuggestionsException();
         }
         return suggestionList;
     }
@@ -82,7 +86,7 @@ public class SuggestUniversity implements Writable {
     // Code partly taken from JsonSerializationDemo
     //EFFECTS: returns json object of suggestionList
     @Override
-    public JSONObject toJson() throws NullPointerException {
+    public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("Suggested", suggestedToJson());
         return json;
@@ -90,7 +94,7 @@ public class SuggestUniversity implements Writable {
 
     // Code partly taken from JsonSerializationDemo
     // EFFECTS: returns suggestionList as a json array
-    private JSONArray suggestedToJson() throws NullPointerException {
+    private JSONArray suggestedToJson() {
         JSONArray jsonArray = new JSONArray();
         for (int i = 0; i < suggestionList.size(); i++) {
             jsonArray.put(suggestionList.get(i));

@@ -8,7 +8,7 @@ public class AddToData {
 
     //MODIFIES: list
     //EFFECTS: creates a DataChoices object and adds it to list
-    public AddToData(DataChoices dc, List<Object> list) {
+    public AddToData(List<DataChoices> list) {
 
         list.add(new DataChoices("esports", "psychology", "canada",
                 "University of British Columbia https://www.ubc.ca/" + "\n"

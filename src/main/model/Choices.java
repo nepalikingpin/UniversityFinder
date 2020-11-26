@@ -22,4 +22,6 @@ public abstract class Choices {
     public String getLocation() {
         return location;
     }
+
+
 }
