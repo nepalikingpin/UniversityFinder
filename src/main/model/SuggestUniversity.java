@@ -45,17 +45,17 @@ public class SuggestUniversity implements Writable {
     // out the related university if the match is found
     public ArrayList<String> suggestion() throws NoSuggestionsException {
         for (int i = 0; i < userList.size(); i++) {
-            UserChoices userTemp = (UserChoices) userList.get(i);
+            UserChoices userTemp = userList.get(i);
 
-            for (Object data : dataList) {
-                DataChoices dataTemp = (DataChoices) data;
+            for (DataChoices data : dataList) {
+                DataChoices dataTemp = data;
 
                 if (userTemp.getInterests().equals(dataTemp.getInterests())
                         || userTemp.getMajor().equals(dataTemp.getMajor())
                         || userTemp.getLocation().equals(dataTemp.getLocation())) {
 
                     if (!(suggestionList.contains(dataTemp.getUniversity()))) {
-                        suggestionList.add(((DataChoices) data).getUniversity());
+                        suggestionList.add((data).getUniversity());
                     }
                 }
             }
