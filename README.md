@@ -35,3 +35,8 @@ this information to be displayed as a pop up message.
 interactively, by clicking a button after I am finished selecting these universities.
 - As a user, I want to be able to load the recommended universities from the file. I want to be able to do this 
 interactively, by clicking a button as soon as the program starts. 
+
+**Phase 4: Task 2**
+- Made the SuggestUniversity class robust. 
+- There are no requires clauses, and a check exception (NoSuggestionsException) gets thrown when no universities that
+adhere to the user's choices are found.
