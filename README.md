@@ -40,3 +40,12 @@ interactively, by clicking a button as soon as the program starts.
 - Made the SuggestUniversity class robust. 
 - There are no requires clauses, and a check exception (NoSuggestionsException) gets thrown when no universities that
 adhere to the user's choices are found.
+
+**Phase 4: Task 3**
+- The design is good for the model and persistence package. There is high cohesion, low coupling and minimal code 
+duplication. 
+- The design for ui is not great, because the entire GUI is handled by the console class, this could be refactored
+to make multiple classes to improve readability. 
+- If I had more time, I would have refactored the Console class in ui. I would have made different classes for different 
+functionalities, instead of creating a lot of methods within the same class. This would have significantly increased the 
+readability of the code.
