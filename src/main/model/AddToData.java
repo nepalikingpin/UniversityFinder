@@ -26,9 +26,9 @@ public class AddToData {
                 "Indian Institute of Science https://www.iisc.ac.in/" + "\n"
                         + "Location: Bengaluru, India" + "\n"
                         + "World Ranking: 185 (2021)"));
-        list.add(new DataChoices("painting", "arts", "canada",
-                "Indian Institute of Science https://www.iisc.ac.in/" + "\n"
-                        + "Location: Bengaluru, India" + "\n"
-                        + "World Ranking: 185 (2021)"));
+        // list.add(new DataChoices("painting", "arts", "canada",
+        //         "Indian Institute of Science https://www.iisc.ac.in/" + "\n"
+        //                 + "Location: Bengaluru, India" + "\n"
+        //                 + "World Ranking: 185 (2021)"));
     }
 }
